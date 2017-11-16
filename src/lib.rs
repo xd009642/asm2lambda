@@ -25,12 +25,14 @@ impl Functor {
     }
 
     fn set_memory(&self, asm: &[u8]) {
-        assert!(asm.len() <= self.size); 
-
+        assert!(asm.len() <= self.size);
+        unsafe {
+            libc::memcpy(self.program_space, asm.as_ptr() as *const libc::c_void, asm.len());
+        }
     }
 
     fn execute(&self) -> bool {
-        
+        false 
     }
 }
 
